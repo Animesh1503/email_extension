@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailShield AI</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>🛡️ MailShield AI</h2>
+
+        <div class="privacy-section">
+            <label>
+                <input type="checkbox" id="privacyMode">
+                Privacy Mode
+            </label>
+        </div>
+
+        <button id="analyzeBtn">
+            Analyze Email
+        </button>
+
+        <div id="loading" class="hidden">
+            Analyzing...
+        </div>
+
+        <div id="result" class="hidden">
+
+            <div class="card">
+                <h3>Risk Score</h3>
+                <p id="riskScore">-</p>
+            </div>
+
+            <div class="card">
+                <h3>Threat Type</h3>
+                <p id="threatType">-</p>
+            </div>
+
+            <div class="card">
+                <h3>Explanation</h3>
+                <p id="explanation">-</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+
+</body>
+</html>

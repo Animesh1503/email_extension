@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "MailShield AI",
+  "version": "1.0.0",
+  "description": "AI-powered email threat detection for Gmail.",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "http://localhost:8000/*"
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MailShield AI"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ]
+}
