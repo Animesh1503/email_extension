@@ -12,14 +12,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     const result =
         document.getElementById("result");
 
-    const riskScore =
-        document.getElementById("riskScore");
-
-    const threatType =
-        document.getElementById("threatType");
-
     const explanation =
         document.getElementById("explanation");
+
+    const riskValue =
+        document.getElementById("riskValue");
+
+    const riskLevel =
+        document.getElementById("riskLevel");
+
+    const bottomRisk =
+        document.getElementById("bottomRisk");
+
+    const bottomThreat =
+        document.getElementById("bottomThreat");
 
     const progressFill =
         document.getElementById("progressFill");
@@ -27,9 +33,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const progressPercent =
         document.getElementById("progressPercent");
 
+    const closeBtn =
+        document.querySelector(".close-btn");
+
     let progressInterval;
 
-    // Load saved privacy mode
+    // Close popup
+
+    if (closeBtn) {
+        closeBtn.addEventListener(
+            "click",
+            () => window.close()
+        );
+    }
+
+    // Load privacy mode
+
     chrome.storage.local.get(
         ["privacyMode"],
         (data) => {
@@ -39,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
     // Save privacy mode
+
     privacyMode.addEventListener(
         "change",
         () => {
@@ -89,6 +109,69 @@ document.addEventListener("DOMContentLoaded", async () => {
             "100%";
     }
 
+    function updateRiskDisplay(
+        score,
+        threat
+    ) {
+
+        const riskText =
+            `${score}/100`;
+
+        riskValue.textContent =
+            riskText;
+
+        bottomRisk.textContent =
+            riskText;
+
+        riskLevel.textContent =
+            threat;
+
+        bottomThreat.textContent =
+            threat;
+
+        // SAFE
+
+        if (score <= 30) {
+
+            riskLevel.style.color =
+                "#3EE089";
+
+            bottomThreat.style.color =
+                "#3EE089";
+
+            bottomThreat.style.background =
+                "rgba(62,224,137,.12)";
+        }
+
+        // SUSPICIOUS
+
+        else if (score <= 70) {
+
+            riskLevel.style.color =
+                "#FFD166";
+
+            bottomThreat.style.color =
+                "#FFD166";
+
+            bottomThreat.style.background =
+                "rgba(255,209,102,.12)";
+        }
+
+        // HIGH RISK
+
+        else {
+
+            riskLevel.style.color =
+                "#FF624D";
+
+            bottomThreat.style.color =
+                "#FF624D";
+
+            bottomThreat.style.background =
+                "rgba(255,98,77,.12)";
+        }
+    }
+
     analyzeBtn.addEventListener(
         "click",
         async () => {
@@ -117,7 +200,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                         action:
                             "GET_EMAIL_DATA"
                     },
-                    async (emailData) => {
+
+                    async (
+                        emailData
+                    ) => {
 
                         if (
                             chrome.runtime
@@ -159,6 +245,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }
 
                         const payload = {
+
                             privacyMode:
                                 privacyMode.checked,
 
@@ -209,13 +296,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                                     )
                             );
 
-                            riskScore.textContent =
-                                data.risk_score ||
-                                "N/A";
+                            const score =
+                                Number(
+                                    data.risk_score
+                                ) || 0;
 
-                            threatType.textContent =
+                            const threat =
                                 data.threat_type ||
                                 "Unknown";
+
+                            updateRiskDisplay(
+                                score,
+                                threat
+                            );
 
                             explanation.textContent =
                                 data.explanation ||
@@ -262,7 +355,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "hidden"
                 );
 
-                console.error(error);
+                console.error(
+                    error
+                );
             }
         }
     );

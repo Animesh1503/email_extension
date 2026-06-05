@@ -4,59 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MailShield AI</title>
+
     <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <h2>🛡️ MailShield AI</h2>
+    <div class="app">
 
-        <div class="privacy-section">
-            <label>
-                <input type="checkbox" id="privacyMode">
-                Privacy Mode
-            </label>
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="brand">
+
+                <img
+                    src="logo.png"
+                    alt="MailShieldAI"
+                    class="logo"
+                >
+
+                <span class="brand-name">
+                    MailShieldAI
+                </span>
+
+            </div>
+
+            <button class="close-btn">
+                ✕
+            </button>
+
         </div>
 
-        <button id="analyzeBtn">
+
+        <!-- PRIVACY CARD -->
+
+        <div class="privacy-card">
+
+            <div class="privacy-left">
+
+                <div class="privacy-icon">
+                    <img src="privacy-logo2.png" alt="">
+                </div>
+
+                <div>
+
+                    <div class="privacy-title">
+                        Privacy Mode
+                    </div>
+
+                    <div class="privacy-subtitle">
+                        Analyse with privacy
+                    </div>
+
+                </div>
+
+            </div>
+
+            <label class="toggle">
+
+                <input
+                    type="checkbox"
+                    id="privacyMode"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+            <div class="card-accent"></div>
+
+        </div>
+
+
+        <!-- ANALYZE BUTTON -->
+
+        <button id="analyzeBtn" class="analyze-btn">
             Analyze Email
         </button>
 
-      <div id="loading" class="hidden">
 
-    <div class="progress-wrapper">
+        <!-- LOADING -->
 
-        <div class="progress-header">
-            <span>Analyzing Email</span>
-            <span id="progressPercent">0%</span>
-        </div>
+        <div id="loading" class="hidden">
 
-        <div class="progress-track">
-            <div id="progressFill" class="progress-fill"></div>
-        </div>
+            <div class="progress-wrapper">
 
-    </div>
+                <div class="progress-header">
 
-</div>
+                    <span>
+                        Analyzing Email
+                    </span>
 
-        <div id="result" class="hidden">
+                    <span id="progressPercent">
+                        0%
+                    </span>
 
-            <div class="card">
-                <h3>Risk Score</h3>
-                <p id="riskScore">-</p>
-            </div>
+                </div>
 
-            <div class="card">
-                <h3>Threat Type</h3>
-                <p id="threatType">-</p>
-            </div>
+                <div class="progress-track">
 
-            <div class="card">
-                <h3>Explanation</h3>
-                <p id="explanation">-</p>
+                    <div
+                        id="progressFill"
+                        class="progress-fill"
+                    ></div>
+
+                </div>
+
             </div>
 
         </div>
+
+
+        <!-- RESULTS -->
+
+        <div
+            id="result"
+            class="result-section hidden"
+        >
+
+            <!-- TASKS HEADER -->
+
+            <div class="tasks-header">
+
+                <span class="tasks-title">
+                    Tasks
+                </span>
+
+                <div class="risk-summary">
+
+                    <span class="risk-label">
+                        Risk Score:
+                    </span>
+
+                    <span
+                        id="riskValue"
+                        class="risk-value"
+                    >
+                        0/100
+                    </span>
+                    <span
+                        id="riskLevel"
+                        class="risk-level"
+                    >
+                        Safe
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GEMINI CARD -->
+
+            <div class="gemini-card">
+
+                <div class="left-glow"></div>
+
+                <div class="gemini-header">
+
+                    <div class="gemini-icon">
+                        ✦
+                    </div>
+
+                    <div class="gemini-title">
+                        Gemini AI
+                    </div>
+
+                </div>
+
+                <div class="explanation-label">
+                    Explanation
+                </div>
+
+                <div
+                    id="explanation"
+                    class="explanation-text"
+                >
+                    Waiting for analysis...
+                </div>
+
+                <div class="bottom-divider"></div>
+
+                <div class="bottom-row">
+
+                    <div
+                        id="bottomRisk"
+                        class="bottom-risk"
+                    >
+                        0/100
+                    </div>
+
+                    <div
+                        id="bottomThreat"
+                        class="bottom-threat"
+                    >
+                        Safe
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
     <script src="popup.js"></script>
