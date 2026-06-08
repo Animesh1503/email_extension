@@ -13,62 +13,75 @@ client = genai.Client(api_key=api_key)
 
 
 def analyze_email(email_data):
+    sender = email_data.get("sender", "")
+    subject = email_data.get("subject", "")
+    body = email_data.get("body", "")
+    links = email_data.get("links", []) or []
 
+    formatted_links = "\n".join(str(link) for link in links)
     prompt = f"""
 You are a cybersecurity expert specializing in phishing and email threat detection.
 
-Analyze the following email.
+Analyze the following email and return ONLY valid JSON.
 
 Sender:
-{email_data.get('sender', '')}
+{sender}
 
 Subject:
-{email_data.get('subject', '')}
+{subject}
 
 Body:
-{email_data.get('body', '')}
+{body}
 
 Links:
-{email_data.get('links', [])}
+{formatted_links}
 
-Return ONLY valid JSON.
+Return a JSON object with these fields:
+- risk_score: number between 0 and 100
+- threat_type: one of Safe, Phishing, Scam, Malware, Credential Theft, Impersonation
+- confidence: number between 0 and 100
+- explanation: string under 100 words
 
 Example:
-
 {{
     "risk_score": 85,
     "threat_type": "Phishing",
+    "confidence": 92,
     "explanation": "The sender domain appears suspicious and the email contains urgency language and potentially deceptive links."
 }}
 
 Rules:
-- risk_score must be a number from 0 to 100
-- threat_type must be one of:
-  Safe
-  Phishing
-  Scam
-  Malware
-  Credential Theft
-  Impersonation
-- explanation must be under 100 words
-- Return ONLY JSON
+- Return ONLY valid JSON
 - Do not use markdown
 - Do not use code blocks
+- Do not include any extra keys
 """
-
     try:
+        # Debug: log truncated prompt to help tracing reused responses
+        print("\n========== GEMINI PROMPT ==========")
+        try:
+            print(prompt[:1000])
+        except Exception:
+            print("(prompt too large to display)")
+        print("===================================")
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
+            model="gemini-2.5-flash-lite",
+            contents=prompt,
         )
 
+        # Log full Gemini response for debugging
+        try:
+            print("\n========== GEMINI RESPONSE ==========")
+            print(response.text)
+            print("=====================================")
+        except Exception:
+            print("(response too large to display)")
+
+        # Return raw text from Gemini (caller is responsible for parsing)
         return response.text
 
     except Exception as e:
-
-        return f"""{{
-            "risk_score": 0,
-            "threat_type": "Error",
-            "explanation": "Gemini API Error: {str(e)}"
-        }}"""
+        # Log error server-side
+        print("Gemini API error:", str(e))
+        return '{"risk_score": 0, "threat_type": "Error", "confidence": 0, "explanation": "Gemini API Error"}'
