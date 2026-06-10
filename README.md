@@ -1,159 +1,222 @@
-MailShield AI
+# 🛡️ MailShield AI
 
-AI-Powered Email Threat Detection for Gmail
+### AI-Powered Email Threat Detection for Gmail
 
-MailShield AI is a Chrome Extension that helps users identify phishing, scam, malware, impersonation, and credential theft emails directly inside Gmail. It combines rule-based security analysis with Google Gemini AI to provide intelligent threat detection, risk scoring, and easy-to-understand explanations before users interact with suspicious emails.
+**Tagline:** Detect Suspicious Emails Before You Click.
 
-🚀 Features
-🔍 Smart Email Analysis
-Analyzes sender details
-Scans email content
-Checks suspicious keywords
-Detects potentially dangerous links
-🤖 AI-Powered Threat Detection
-Uses Google Gemini AI
-Identifies:
-Phishing
-Scam
-Malware
-Credential Theft
-Impersonation
-Safe Emails
-📊 Risk Scoring System
-Generates a risk score from 0–100
-Categorizes emails as:
-🟢 Safe
-🟡 Medium Risk
-🔴 High Risk
-🛡 Privacy Mode
-Redacts email body before sending data to AI
-Helps protect sensitive information
-📋 Threat Explanation
-Provides a simple explanation of why an email is considered risky
-Displays detected suspicious indicators
-🎨 User-Friendly Interface
-Chrome Extension popup UI
-Risk badges
-Progress bar visualization
-Threat summary cards
-🏗️ Tech Stack
-Frontend
-HTML
-CSS
-JavaScript
-Chrome Extension Manifest V3
-Backend
-FastAPI
-Python
-AI Integration
-Google Gemini API
-Security Analysis
-Rule-Based Detection Engine
-AI Threat Classification
-📂 Project Structure
+---
+
+## 📌 Problem Statement
+
+Email remains one of the most common attack vectors for phishing, scams, credential theft, malware distribution, and impersonation attacks. Many users struggle to identify malicious emails because modern phishing attempts often mimic legitimate organizations and use convincing language. Existing email platforms may not provide sufficient real-time explanations about why an email is dangerous, leaving users vulnerable to cyber threats.
+
+---
+
+## 💡 Solution
+
+MailShield AI is a Chrome Extension that analyzes Gmail emails in real time using a combination of:
+
+* Rule-Based Threat Detection
+* AI-Powered Analysis using Google Gemini
+* Risk Scoring Engine
+* Privacy Mode for secure analysis
+
+The extension helps users understand whether an email is safe or potentially malicious by providing:
+
+* Risk Score (0–100)
+* Risk Level (Low / Medium / High)
+* Threat Category
+* Suspicious Indicators Detected
+* AI-Generated Explanation
+
+---
+
+## 🚀 Features
+
+### 🔍 Email Analysis
+
+Analyzes sender information, email content, and embedded links.
+
+### 🤖 AI Threat Detection
+
+Uses Google Gemini AI to classify emails into:
+
+* Safe
+* Phishing
+* Scam
+* Malware
+* Credential Theft
+* Impersonation
+
+### 📊 Risk Scoring System
+
+Generates a numerical risk score and categorizes emails into:
+
+* 🟢 Low Risk
+* 🟡 Medium Risk
+* 🔴 High Risk
+
+### 🔐 Privacy Mode
+
+Redacts email content before sending data to the AI model.
+
+### 📋 Suspicious Indicator Detection
+
+Detects:
+
+* Urgency language
+* Password requests
+* OTP requests
+* Suspicious sender patterns
+* URL shorteners
+* Excessive links
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+* Chrome Extension Manifest V3
+
+### Backend
+
+* FastAPI
+* Python
+
+### AI Integration
+
+* Google Gemini API
+
+---
+
+## 📂 Project Structure
+
 MailShieldAI/
+
+├── frontend/
+
+│ ├── popup.html
+
+│ ├── popup.css
+
+│ ├── popup.js
+
+│ ├── content.js
+
+│ ├── background.js
+
+│ └── manifest.json
+
 │
-├── extension/
-│   ├── manifest.json
-│   ├── popup.html
-│   ├── popup.css
-│   ├── popup.js
-│   ├── content.js
-│   └── background.js
-│
+
 ├── backend/
-│   ├── app.py
-│   ├── analyzer.py
-│   ├── gemini_service.py
-│   ├── risk_scorer.py
-│   ├── .env
-│   └── requirements.txt
+
+│ ├── app.py
+
+│ ├── analyzer.py
+
+│ ├── gemini_service.py
+
+│ ├── risk_scorer.py
+
+│ ├── .env
+
+│ └── requirements.txt
+
 │
+
 └── README.md
-⚙️ Installation
-1. Clone Repository
-git clone https://github.com/yourusername/mailshield-ai.git
-cd mailshield-ai
-2. Install Backend Dependencies
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/yourusername/MailShieldAI.git
+cd MailShieldAI
+```
+
+### 2. Install Backend Dependencies
+
+```bash
 pip install -r requirements.txt
-3. Create Environment File
+```
 
-Create a .env file inside the backend folder:
+### 3. Configure Gemini API Key
 
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-4. Start Backend Server
-python -m uvicorn app:app --reload
+Create a `.env` file inside the backend folder:
+
+```env
+GEMINI_API_KEY=YOUR_API_KEY
+```
+
+### 4. Start FastAPI Backend
+
+```bash
+uvicorn app:app --reload
+```
 
 Backend runs at:
 
+```text
 http://127.0.0.1:8000
-5. Load Chrome Extension
-Open Chrome
-Go to:
-chrome://extensions
-Enable Developer Mode
-Click Load Unpacked
-Select the extension folder
-📖 How It Works
-Step 1
+```
 
-User opens an email in Gmail.
+### 5. Load Chrome Extension
 
-Step 2
+1. Open Chrome
+2. Go to chrome://extensions
+3. Enable Developer Mode
+4. Click Load Unpacked
+5. Select the extension folder
 
-MailShield AI extracts:
+---
 
-Sender
-Subject
-Email Body
-Links
-Step 3
+## 🧪 How It Works
 
-Rule-Based Engine checks for:
+1. User opens an email in Gmail.
+2. MailShield extracts sender, subject, body, and links.
+3. Local rule-based engine calculates risk score.
+4. Email is analyzed using Gemini AI.
+5. Results are displayed in a clean dashboard showing:
 
-Suspicious keywords
-URL shorteners
-Multiple links
-Credential requests
-Suspicious sender patterns
-Step 4
+   * Risk Score
+   * Risk Level
+   * Threat Type
+   * Suspicious Indicators
+   * AI Explanation
 
-Gemini AI performs contextual threat analysis.
+---
 
-Step 5
+## 🔮 Future Improvements
 
-Results are displayed:
+* URL Reputation Checking
+* Domain Verification
+* Attachment Scanning
+* Machine Learning Risk Models
+* Threat History Dashboard
+* Real-Time Gmail Banner Warnings
+* Dark Mode Support
+* Multi-Language Email Analysis
 
-Risk Score
-Risk Level
-Threat Type
-Detected Risks
-AI Explanation
-📊 Example Output
-{
-  "risk_score": 78,
-  "risk_level": "HIGH",
-  "threat_type": "Phishing",
-  "detected_risks": [
-    "Suspicious keyword detected: verify",
-    "Sensitive credential request detected"
-  ],
-  "explanation": "The email attempts to create urgency and asks the user to verify account credentials through a suspicious link."
-}
-🎯 Problem Statement
+---
 
-Email-based cyberattacks such as phishing, scams, credential theft, and malware distribution are becoming increasingly sophisticated, making it difficult for users to distinguish between legitimate and malicious emails. Many fraudulent emails bypass traditional spam filters and use deceptive tactics such as fake sender identities, suspicious links, and urgent messages to trick users into revealing sensitive information.
+## 👩‍💻 Developed By
 
-💡 Solution
+Prachi Mehta
 
-MailShield AI provides real-time email threat analysis inside Gmail using a combination of rule-based detection and Google Gemini AI. The system evaluates email content, sender information, and links to generate a risk score, identify threat types, and explain potential dangers in simple language, helping users make safer decisions before interacting with suspicious emails.
+Second Year Information Technology Student
 
-🔮 Future Enhancements
-Sender Reputation Analysis
-URL Reputation Checking
-Attachment Malware Detection
-AI Email Summarization
-Threat History Dashboard
-Organization-wide Email Protection
-Multi-language Support
-Real-time Threat Intelligence Integration
+KJ Somaiya Institute of Technology
+
+---
+
+## ⭐ Project Goal
+
+To provide an intelligent and user-friendly email security assistant that helps users identify phishing and scam emails before they become victims of cyber attacks.
